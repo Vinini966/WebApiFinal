@@ -1,0 +1,71 @@
+<script src="/socket.io/socket.io.js"></script>
+
+<script>
+  $(function (e) {
+    var socket = io();
+    //e.preventDefault();
+    var rmCD;
+    socket.on('err', function(data){//error handling
+      console.log(data.err)
+      switch(data.errCode){
+        case 0:
+            //push room code error and redirect to index
+          break;
+      }
+    });
+
+    socket.on("handshake", function(data){
+      var data = decodeURI("{{clientInfo}}");
+      //console.log(data);
+      data = JSON.parse(data);
+      rmCD = data.roomCode;
+      socket.emit('connInfo', data);
+    });
+
+    socket.on("ClientStatus", function(data){
+      if(data.host){
+        $('#bodyholder').load("/html/gameStartHost.html");
+        
+      }
+      else{
+        $('#bodyholder').load("/html/gameStart.html");
+      }
+    });
+
+    socket.on('gameBegining', function(data){
+      $('#bodyholder').empty();
+      $('#bodyholder').load("/html/wait.html");
+    });
+
+    socket.on('roundStart', function(data){
+      $('#bodyholder').empty();
+      $('#bodyholder').load("/html/game.html", function(){
+        //load first question
+      });
+    });
+
+
+
+
+    
+    $('#bodyholder').on('click', '#begin', function(){
+      socket.emit("beginGame", {roomCode:rmCD});
+    })
+    $('#bodyholder').on('click', '#a', function(){
+      
+    })
+    $('#bodyholder').on('click', '#b', function(){
+      
+    })
+    $('#bodyholder').on('click', '#c', function(){
+      
+    })
+    
+  });
+</script>
+
+<div class="" id="bodyholder">
+
+
+
+</div>
