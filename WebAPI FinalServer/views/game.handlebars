@@ -1,10 +1,15 @@
 <script src="/socket.io/socket.io.js"></script>
 
+{{> _navbar}}
+
 <script>
   $(function (e) {
     var socket = io();
     //e.preventDefault();
     var rmCD;
+    var user;
+    var currAns;
+    var score = 0;
     socket.on('err', function(data){//error handling
       console.log(data.err)
       switch(data.errCode){
@@ -19,6 +24,7 @@
       //console.log(data);
       data = JSON.parse(data);
       rmCD = data.roomCode;
+      $('#user').text(data.userName);
       socket.emit('connInfo', data);
     });
 
@@ -40,11 +46,34 @@
     socket.on('roundStart', function(data){
       $('#bodyholder').empty();
       $('#bodyholder').load("/html/game.html", function(){
-        //load first question
+        $('#question').text(data.question);
+        $('#a').text(data.a);
+        $('#b').text(data.b);
+        $('#c').text(data.c);
+        currAns = data.answer;
       });
     });
 
+    socket.on("receiveQ", function(data){
+      console.log("new Question Recived")
+      $('#question').text(data.question);
+      $('#a').text(data.a);
+      $('#b').text(data.b);
+      $('#c').text(data.c);
+      currAns = data.answer;
+    });
 
+    socket.on("TimeUp", function(data){
+      $('#bodyholder').empty();
+      $('#bodyholder').load("/html/wait.html");
+      var plScore = {
+        userName: $('#user').text(),
+        roomCode: rmCD,
+        playerScore: score
+      }
+      console.log(plScore)
+      socket.emit('sendScore', plScore);
+    });
 
 
     
@@ -52,13 +81,28 @@
       socket.emit("beginGame", {roomCode:rmCD});
     })
     $('#bodyholder').on('click', '#a', function(){
-      
+      console.log('A clicked');
+      if(currAns == 'a'){
+        score += 100;
+        $('#score').text(score);
+      }
+      socket.emit("nextQ", {roomCode:rmCD});
     })
     $('#bodyholder').on('click', '#b', function(){
-      
+      console.log('A clicked');
+      if(currAns == 'b'){
+        score += 100;
+        $('#score').text(score);
+      }
+      socket.emit("nextQ", {roomCode:rmCD});
     })
     $('#bodyholder').on('click', '#c', function(){
-      
+      console.log('A clicked');
+      if(currAns == 'c'){
+        score += 100;
+        $('#score').text(score);
+      }
+      socket.emit("nextQ", {roomCode:rmCD});
     })
     
   });

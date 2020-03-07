@@ -9,12 +9,13 @@ using System;
 public class Network : MonoBehaviour
 {
     public static SocketIOComponent socket;
-    static Network I;
+    public static Network I;
     const string roomGenString = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     System.Random r = new System.Random();
     public string roomCode;
+
     [SerializeField]
-    public List<string> players;
+    public Dictionary<string, int> players;
 
     public Text RoomCode;
     public Text userNames;
@@ -29,6 +30,7 @@ public class Network : MonoBehaviour
             DontDestroyOnLoad(this.gameObject);
         }
         RollRoomCode();
+        players = new Dictionary<string, int>();
 
         socket = GetComponent<SocketIOComponent>();
 
@@ -36,7 +38,16 @@ public class Network : MonoBehaviour
         socket.On("handshake", OnHandshake);
         socket.On("clientJoin", OnPlayerJoin);
         socket.On("gameBegining", BeginGame);
+        socket.On("score", SetScores);
         
+    }
+
+    private void SetScores(SocketIOEvent e)
+    {
+        string tmp = e.data["userName"].ToString();
+        tmp = tmp.Replace("\"", "");
+        players[tmp] = Int32.Parse(e.data["playerScore"].ToString());
+        SceneManager.LoadScene("Score");
     }
 
     private void BeginGame(SocketIOEvent obj)
@@ -48,10 +59,11 @@ public class Network : MonoBehaviour
     {
         string tmp = e.data["userName"].ToString();
         tmp = tmp.Replace("\"", "");
-        players.Add(tmp);
-        foreach(string u in players)
+        players.Add(tmp, 0);
+        userNames.text = "";
+        foreach(KeyValuePair<string,int> u in players)
         {
-            userNames.text += u + '\n';
+            userNames.text += u.Key + '\n';
         }
 
     }

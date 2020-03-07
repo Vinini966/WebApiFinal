@@ -57,13 +57,25 @@ var server = app.listen(3000, function(){
 var io = require('socket.io').listen(server);
 var shortid = require("shortid");
 
+require('./models/Question');
+var QA = mongoose.model('questions');
+
 var players = [];
+var questionList = []
+
+QA.find({}).then(function(data){
+  questionList = data;
+})
+
+
 
 io.on('connection', function(socket){
   
   console.log("Incomming Connection...");
 
   socket.emit('handshake');
+  
+  //console.log(questionList);
 
   socket.on('connInfo', function(data){
     var room = io.sockets.adapter.rooms[data.roomCode];
@@ -79,6 +91,20 @@ io.on('connection', function(socket){
             userName:data.userName
           }
           hostDict[data.roomCode].emit("clientJoin", userNameData);
+
+          var shuffleList = {
+            list: [],
+            on: 1
+          }
+
+          
+          //console.log(shuffleList.list);
+
+          players[socket.id] = shuffleList;
+          players[socket.id].list = shuffle(questionList.slice())
+
+          //console.log(players[socket.id]);
+
           if(room.length == 2){//control "host" Client
             socket.emit("ClientStatus", {host:true});
           }
@@ -123,7 +149,42 @@ io.on('connection', function(socket){
     io.in(data.roomCode).emit('gameBegining');
   })
 
+  socket.on('roundStart', function(data){
+    var question = questionList[0];
+    socket.in(data.roomCode).emit('roundStart', question);
+  });
 
+  socket.on('nextQ', function(data){
+    //hostDict[data.roomCode].emit("ding"); //answer a question get a ding
+    console.log("serving question");
+    var question = players[socket.id].list[players[socket.id].on++];
+    socket.emit('receiveQ', question);
+  });
+
+  socket.on('roundEnd', function(data){
+    socket.in(data.roomCode).emit('TimeUp');
+  })
+
+  socket.on('sendScore', function(data){
+    console.log(data.userName + ": " + data.playerScore);
+    hostDict[data.roomCode].emit("score", data);
+  })
+
+  function getRandomInt(max) {
+    return Math.floor(Math.random() * Math.floor(max));
+  }
+
+  function shuffle(arr){
+    var tmplst = [];
+    tmplst.push(arr[0]);
+      arr.splice(0, 1);
+    for(var i = 0; i < arr.length; i++){
+      var rmdnbr = getRandomInt(arr.length);
+      tmplst.push(arr[rmdnbr]);
+      arr.splice(rmdnbr, 1);
+    }
+    return tmplst;
+  }
 
 
 

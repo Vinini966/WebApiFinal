@@ -5,18 +5,18 @@ var QuestionSchema = new Schema({
     question:{
         type:String
     },
-    ansA:{
+    a:{
         type:String
     },
-    ansB:{
+    b:{
         type:String
     },
-    ansC:{
+    c:{
         type:String
     },
-    ans:{
-        type:Number
+    answer:{
+        type:String
     }
 });
 
-mongoose.model('qna', QuestionSchema);
+mongoose.model('questions', QuestionSchema);
