@@ -38,6 +38,7 @@ public class Network : MonoBehaviour
         socket.On("handshake", OnHandshake);
         socket.On("clientJoin", OnPlayerJoin);
         socket.On("gameBegining", BeginGame);
+        
         socket.On("score", SetScores);
         
     }

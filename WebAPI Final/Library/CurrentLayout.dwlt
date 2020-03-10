@@ -95,7 +95,7 @@ MonoBehaviour:
   m_MinSize: {x: 917, y: 444}
   m_MaxSize: {x: 22012, y: 10022}
   vertical: 0
-  controlID: 108
+  controlID: 37
 --- !u!114 &5
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -141,7 +141,7 @@ MonoBehaviour:
   m_MinSize: {x: 202, y: 444}
   m_MaxSize: {x: 4002, y: 8044}
   vertical: 1
-  controlID: 114
+  controlID: 16
 --- !u!114 &7
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -420,23 +420,23 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: 702e0000
+      m_SelectedIDs: 
       m_LastClickedID: 0
-      m_ExpandedIDs: 16bdffffaadbffffb4dbffffdadbffff5ae1ffff7ee1ffff82e8ffff1cedffffa4edffffd4eeffffccf6ffffe6f6fffff2f6ffffe4f7ffff8ef9fffff4ffffff3c30000084300000
+      m_ExpandedIDs: 6a5dffff965dffff685effff705effff745effff9a5fffffc65fffff9860ffffa060ffffa460ffffc461fffff061ffffc262ffffca62ffffce62ffff6a64ffffbe9cffff329dffffeecaffff94dcffffa6dfffff06edffff40f1ffff8efbffff202d00002a2d00000638000070380000783800008440000094400000
       m_RenameOverlay:
         m_UserAcceptedRename: 0
-        m_Name: 
-        m_OriginalName: 
+        m_Name: Background
+        m_OriginalName: Background
         m_EditFieldRect:
           serializedVersion: 2
           x: 0
           y: 0
           width: 0
           height: 0
-        m_UserData: 0
+        m_UserData: 14334
         m_IsWaitingForDelay: 0
         m_IsRenaming: 0
-        m_OriginalEventType: 11
+        m_OriginalEventType: 0
         m_IsRenamingFilename: 0
         m_ClientGUIView: {fileID: 7}
       m_SearchString: 
@@ -520,7 +520,7 @@ MonoBehaviour:
     m_ShowAllHits: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Scenes
+    - Assets/Scripts
   m_ViewMode: 0
   m_StartGridSize: 64
   m_LastFolders: []
@@ -532,7 +532,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 48370000
     m_LastClickedID: 14152
-    m_ExpandedIDs: 00000000fa2b00001e2c0000
+    m_ExpandedIDs: 00000000022a0000262a0000142b0000b22c0000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -560,18 +560,18 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: ffffffff00000000fa2b00001e2c00000a2d0000a62e0000
+    m_ExpandedIDs: ffffffff00000000022a0000262a0000d82a00000a2b0000142b0000b22c0000d22c00004c300000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
-      m_Name: Scoreing
-      m_OriginalName: Scoreing
+      m_Name: SampleScene
+      m_OriginalName: SampleScene
       m_EditFieldRect:
         serializedVersion: 2
         x: 0
         y: 0
         width: 0
         height: 0
-      m_UserData: 16274
+      m_UserData: 11388
       m_IsWaitingForDelay: 0
       m_IsRenaming: 0
       m_OriginalEventType: 0
@@ -732,9 +732,9 @@ MonoBehaviour:
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: 295.50867, y: 342.5515, z: -334.625}
+    m_Target: {x: 406.34033, y: 277.32785, z: -649.94385}
     speed: 2
-    m_Value: {x: 295.50867, y: 342.5515, z: -334.625}
+    m_Value: {x: 406.34033, y: 277.32785, z: -649.94385}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -767,9 +767,9 @@ MonoBehaviour:
     speed: 2
     m_Value: {x: 0, y: 0, z: 0, w: 1}
   m_Size:
-    m_Target: 873.9252
+    m_Target: 822.6042
     speed: 2
-    m_Value: 873.9252
+    m_Value: 822.6042
   m_Ortho:
     m_Target: 1
     speed: 2

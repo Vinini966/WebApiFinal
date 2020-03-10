@@ -40,7 +40,10 @@ namespace SocketIO
 {
 	public class SocketIOComponent : MonoBehaviour
 	{
-		#region Public Properties
+        #region Public Properties
+
+        public bool local;
+        public string pubURL;
 
 		public string url = "ws://127.0.0.1:4567/socket.io/?EIO=4&transport=websocket";
 		public bool autoConnect = true;
@@ -98,6 +101,11 @@ namespace SocketIO
 			ackList = new List<Ack>();
 			sid = null;
 			packetId = 0;
+
+            if (!local)
+            {
+                url = pubURL;
+            }
 
 			ws = new WebSocket(url);
 			ws.OnOpen += OnOpen;
