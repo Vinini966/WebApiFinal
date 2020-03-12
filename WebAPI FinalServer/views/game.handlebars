@@ -14,7 +14,17 @@
       console.log(data.err)
       switch(data.errCode){
         case 0:
-            //push room code error and redirect to index
+            $.ajax({
+              type: "POST",
+              url: "/err",
+              data: { msg: data.err },
+              success: function(e) {
+                window.location.href=e.url;
+              },
+              error: function(jqXHR, textStatus, err) {
+                  alert('text status '+textStatus+', err '+err)
+              }
+            });
           break;
       }
     });
@@ -73,7 +83,21 @@
       }
       console.log(plScore)
       socket.emit('sendScore', plScore);
+      //$('#bodyholder').empty();
+      //$('#bodyholder').load("/html/PointSelection.html", function(){
+      //  $('#score').text(score);
+      //  if(score == 0)
+      //    $('#+1').text(score + 500);
+      //  else
+      //    $('#+1').text(score*2);
+      //  $('#0').text(score);
+      //  $('#-1').text(score - 500);
+      //});
     });
+
+    socket.on("EnoughPlayers", function(data){
+      $("p").append('<button class="btn btn-dark btn-lg mb-3 ml-3 mr-3" id = "begin">Begin Game</button>')
+    })
 
 
     
@@ -103,6 +127,41 @@
         $('#score').text(score);
       }
       socket.emit("nextQ", {roomCode:rmCD});
+    })
+
+    $('#bodyholder').on('click', '#+1', function(){
+      if(score == 0)
+          var tmp = score + 500;
+        else
+          var tmp = score*2;
+      var chaseData = {
+        userName: $('#user').text(),
+        playerStart: 3
+        playerScore: tmp
+      }
+      socket.emit('ChaseData', chaseData);
+      $('#bodyholder').empty();
+      $('#bodyholder').load("/html/wait.html");
+    })
+    $('#bodyholder').on('click', '#0', function(){
+      var chaseData = {
+        userName: $('#user').text(),
+        playerStart: 4
+        playerScore: score
+      }
+      socket.emit('ChaseData', chaseData);
+      $('#bodyholder').empty();
+      $('#bodyholder').load("/html/wait.html");
+    })
+    $('#bodyholder').on('click', '#-1', function(){
+      var chaseData = {
+        userName: $('#user').text(),
+        playerStart: 5
+        playerScore: score - 500
+      }
+      socket.emit('ChaseData', chaseData);
+      $('#bodyholder').empty();
+      $('#bodyholder').load("/html/wait.html");
     })
     
   });

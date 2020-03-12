@@ -16,9 +16,11 @@ mongoose.connect(db.mongoURI ,{
 });
 
 
+const MaxPlayersPerRoom = 4;
+
 var app = express();
 
-app.io = io;
+//app.io = io;
 
 // view engine setup
 app.engine('handlebars', exphbs({defaultLayout:'main'}));
@@ -34,7 +36,20 @@ var clientDict = {};
 
 // catch 404 and forward to error handler
 app.get('/', function(req, res){
-  res.render('index');
+  res.render('index', {
+    msg: req.params.err
+  });
+});
+
+app.get('/:err', function(req, res){
+  res.render('index', {
+    msg: req.params.err
+  });
+});
+
+app.post('/err', function(req, res){
+  console.log("Mesage Got.");
+  res.send({url: '/' + req.body.msg})
 });
 
 app.post('/game', function(req, res){
@@ -49,8 +64,10 @@ app.post('/game', function(req, res){
   });
 });
 
-var server = app.listen(3000, function(){
-  console.log("Server started on port 3000")
+const PORT = process.env.PORT || 3000
+
+var server = app.listen(PORT, function(){
+  console.log("Server started on port " + PORT);
 });
 
 
@@ -61,11 +78,12 @@ require('./models/Question');
 var QA = mongoose.model('questions');
 
 var players = [];
-var questionList = []
+var questionList = [];
 
 QA.find({}).then(function(data){
   questionList = data;
-})
+  console.log("Questions Loaded.");
+});
 
 
 
@@ -83,7 +101,8 @@ io.on('connection', function(socket){
     if(data.client){
       console.log("Client Joined")
       if(room!= undefined){//host has created room
-        if(room.length < 10){
+        console.log(room.length);
+        if(room.length <= MaxPlayersPerRoom){
           socket.join(data.roomCode);
           console.log("Client joined room " + data.roomCode)
           console.log("Sending host user name at " + hostDict[data.roomCode].id);
@@ -107,15 +126,18 @@ io.on('connection', function(socket){
 
           if(room.length == 2){//control "host" Client
             socket.emit("ClientStatus", {host:true});
+            clientDict[data.roomCode] = socket;
           }
           else{
             socket.emit("ClientStatus", {host:false});
+            if(room.length == 3)
+              clientDict[data.roomCode].emit("EnoughPlayers");
           }
         }
         else{
           var errMsg = {
             err: "Room Full!",
-            errCode: 0
+            errCode: 0 //0 - standard alert
           }
           socket.emit("err", errMsg);
         }
@@ -156,7 +178,7 @@ io.on('connection', function(socket){
 
   socket.on('nextQ', function(data){
     //hostDict[data.roomCode].emit("ding"); //answer a question get a ding
-    console.log("serving question");
+    //console.log("serving question");
     var question = players[socket.id].list[players[socket.id].on++];
     socket.emit('receiveQ', question);
   });

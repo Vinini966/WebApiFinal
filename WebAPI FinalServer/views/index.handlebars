@@ -1,4 +1,9 @@
 <div class = "jumbotron text-center">
+
+    {{#if msg}}
+    <div class="alert alert-danger">{{msg}}</div>
+    {{/if}}
+
     <form action= '/game' method="POST">
         <div class="form-group">
             <label for= "user">Username: </label>
