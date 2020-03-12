@@ -20,6 +20,7 @@ public class Network : MonoBehaviour
     public Text RoomCode;
     public Text userNames;
 
+    public List<JSONObject> playerChaseData;
 
     // Start is called before the first frame update
     void Start()
@@ -40,7 +41,18 @@ public class Network : MonoBehaviour
         socket.On("gameBegining", BeginGame);
         
         socket.On("score", SetScores);
+
+        socket.On("joinChase", playerChase);
         
+    }
+
+    public void playerChase(SocketIOEvent e)
+    {
+        playerChaseData.Add(e.data);
+        if(playerChaseData.Count == players.Count)
+        {
+            SceneManager.LoadScene("Chase");
+        }
     }
 
     private void SetScores(SocketIOEvent e)

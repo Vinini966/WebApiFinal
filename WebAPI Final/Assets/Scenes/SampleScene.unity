@@ -623,9 +623,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 961346d7e16a445ff93777573e78efd6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  local: 0
+  local: 1
   pubURL: ws://vinibox.herokuapp.com:80/socket.io/?EIO=4&transport=websocket
-  url: ws://127.0.0.1:4567/socket.io/?EIO=4&transport=websocket
+  url: ws://127.0.0.1:3000/socket.io/?EIO=4&transport=websocket
   autoConnect: 1
   reconnectDelay: 5
   ackExpirationTime: 1800
@@ -656,7 +656,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 4df4798b69943b344bbcd9c6cf09fdfa, type: 3}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 1
@@ -998,7 +998,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -0.19999695, y: -0.00048828125}
+  m_AnchoredPosition: {x: -0.2000122, y: -0.00048828125}
   m_SizeDelta: {x: 14.789978, y: -0.020004272}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1423682131
