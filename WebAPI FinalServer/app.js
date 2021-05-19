@@ -97,7 +97,7 @@ io.on('connection', function(socket){
 
   socket.on('connInfo', function(data){
     var room = io.sockets.adapter.rooms[data.roomCode];
-    //console.log(room);
+    console.log(room);
     if(data.client){
       console.log("Client Joined")
       if(room!= undefined){//host has created room

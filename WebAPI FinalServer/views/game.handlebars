@@ -136,7 +136,7 @@
           var tmp = score*2;
       var chaseData = {
         userName: $('#user').text(),
-        playerStart: 3
+        playerStart: 3,
         playerScore: tmp
       }
       socket.emit('ChaseData', chaseData);
@@ -146,7 +146,7 @@
     $('#bodyholder').on('click', '#0', function(){
       var chaseData = {
         userName: $('#user').text(),
-        playerStart: 4
+        playerStart: 4,
         playerScore: score
       }
       socket.emit('ChaseData', chaseData);
@@ -156,7 +156,7 @@
     $('#bodyholder').on('click', '#-1', function(){
       var chaseData = {
         userName: $('#user').text(),
-        playerStart: 5
+        playerStart: 5,
         playerScore: score - 500
       }
       socket.emit('ChaseData', chaseData);
